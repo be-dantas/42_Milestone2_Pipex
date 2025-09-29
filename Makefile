@@ -6,7 +6,7 @@
 #    By: bedantas <bedantas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/22 17:56:52 by bedantas          #+#    #+#              #
-#    Updated: 2025/09/23 13:14:37 by bedantas         ###   ########.fr        #
+#    Updated: 2025/09/24 16:50:22 by bedantas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,8 +16,10 @@ CC = cc
 
 CFLAGS = -Wall -Wextra -Werror
 
-SRCS = 	pipex.c	\
-		utils.c	\
+SRCS = 	pipex.c		\
+		commands.c	\
+		exec.c
+		
 
 OBJS = $(SRCS:.c=.o)
 

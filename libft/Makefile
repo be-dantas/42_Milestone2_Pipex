@@ -6,7 +6,7 @@
 #    By: bedantas <bedantas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/17 09:30:58 by bedantas          #+#    #+#              #
-#    Updated: 2025/07/29 13:44:22 by bedantas         ###   ########.fr        #
+#    Updated: 2025/09/24 17:38:41 by bedantas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,8 @@ SRCS =	ft_isalpha.c	\
 		ft_putstr_fd.c	\
 		ft_putendl_fd.c	\
 		ft_putnbr_fd.c	\
-		ft_split.c
+		ft_split.c		\
+		ft_strstr.c
 
 OBJS = $(SRCS:.c=.o)
 

@@ -1,20 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_strstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bedantas <bedantas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/22 17:55:47 by bedantas          #+#    #+#             */
-/*   Updated: 2025/09/23 14:58:50 by bedantas         ###   ########.fr       */
+/*   Created: 2025/07/21 18:19:26 by bedantas          #+#    #+#             */
+/*   Updated: 2025/09/24 18:11:35 by bedantas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-void	perror_exit(char *str)
+char	*ft_strstr(char **text, char *word)
 {
-	perror(str);
-	exit (EXIT_FAILURE);
-}
+	int	x;
+	int	i;
 
+	x = 0;
+	while (text[x])
+	{
+		i = 0;
+		if (text[x][i] == word[i])
+		{
+			while (word[i] != '\0' && text[x][i] != '\0' && text[x][i] == word[i])
+				i++;
+			if (word[i] == '\0' && text[x][i - 1] == word[i - 1])
+				return(&text[x][i]);
+		}
+		x++;
+	}
+	return (0);
+}

@@ -6,7 +6,7 @@
 /*   By: bedantas <bedantas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 09:49:36 by bedantas          #+#    #+#             */
-/*   Updated: 2025/09/17 14:45:55 by bedantas         ###   ########.fr       */
+/*   Updated: 2025/09/24 17:38:24 by bedantas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,7 @@ char		*ft_strtrim(char const *s1, char const *set);
 char		*ft_itoa(int n);
 char		*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char		**ft_split(char const *s, char c);
+
+char	    *ft_strstr(char *text, char *word);
 
 #endif
