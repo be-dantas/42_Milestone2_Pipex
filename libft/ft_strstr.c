@@ -6,7 +6,7 @@
 /*   By: bedantas <bedantas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 18:19:26 by bedantas          #+#    #+#             */
-/*   Updated: 2025/09/30 10:59:19 by bedantas         ###   ########.fr       */
+/*   Updated: 2025/09/30 12:05:51 by bedantas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*ft_strstr(char **text, char *word)
 					!= '\0' && text[x][i] == word[i])
 				i++;
 			if (word[i] == '\0' && text[x][i - 1] == word[i - 1])
-				return (&text[x][i]);
+				return (&text[x][i + 1]);
 		}
 		x++;
 	}

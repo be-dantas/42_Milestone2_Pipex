@@ -6,7 +6,7 @@
 /*   By: bedantas <bedantas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 17:55:01 by bedantas          #+#    #+#             */
-/*   Updated: 2025/09/30 11:32:24 by bedantas         ###   ########.fr       */
+/*   Updated: 2025/09/30 12:01:23 by bedantas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,7 @@ int	main(int argc, char **argv, char **env)
 	if (pid == -1)
 		perror_exit("Error pid");
 	if (pid == 0) //se for o primeiro processo (cmd1/filho)
-	{
 		cmd1(argv, pipe_fd, env);
-		exit(EXIT_SUCCESS);
-	}
 	else
 	{
 		waitpid(pid, NULL, 0);
