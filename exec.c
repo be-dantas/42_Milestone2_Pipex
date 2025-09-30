@@ -6,7 +6,7 @@
 /*   By: bedantas <bedantas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 16:49:07 by bedantas          #+#    #+#             */
-/*   Updated: 2025/09/29 17:58:46 by bedantas         ###   ########.fr       */
+/*   Updated: 2025/09/30 11:13:05 by bedantas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	**path(char **env)
 	char	**path_split;
 
 	search_path = ft_strstr(env, "PATH");
-	path_split = ft_split(search_path, ":");
+	path_split = ft_split(search_path, ':');
 	if (!path_split)
 		return (NULL);
 	return (path_split);
@@ -66,7 +66,7 @@ void	exec_cmd(char *argv, char **env)
 	char	**path_split;
 	char	*exec;
 
-	cmd_split = ft_split(argv[2], " ");
+	cmd_split = ft_split(&argv[2], ' ');
 	if (!cmd_split)
 		exit (EXIT_FAILURE);
 		
@@ -75,23 +75,10 @@ void	exec_cmd(char *argv, char **env)
 		exit (EXIT_FAILURE);
 
 	exec = command_valid(cmd_split, path_split);
-	if (!exec)
+	if (!exec || execve(exec, cmd_split, env) == -1)
 	{
 		free_array(cmd_split);
 		free_array(path_split);
 		perror_exit("Command invalid");
 	}
-
-
-
-
-
-
-
-
-
-
-	
-	free_array(cmd_split);
-	free_array(path_split);
 }
