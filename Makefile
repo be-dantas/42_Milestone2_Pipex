@@ -6,7 +6,7 @@
 #    By: bedantas <bedantas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/22 17:56:52 by bedantas          #+#    #+#              #
-#    Updated: 2025/09/30 18:16:57 by bedantas         ###   ########.fr        #
+#    Updated: 2025/10/02 13:59:33 by bedantas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,8 +16,10 @@ CC = cc
 
 CFLAGS = -Wall -Wextra -Werror
 
-SRCS = 	pipex.c		\
-		commands.c	\
+SRCS = 	pipex.c			\
+		pipex_utils.c	\
+		commands.c		\
+		exec_utils.c	\
 		exec.c
 
 OBJS = $(SRCS:.c=.o)
@@ -33,7 +35,6 @@ $(NAME): $(OBJS)
 	cp ./libft/libft.a $(NAME)
 	ar -rcs $(NAME) $(OBJS)
 	cc pipex.c $(NAME) -o pipex
-	rm -f pipex.a
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@

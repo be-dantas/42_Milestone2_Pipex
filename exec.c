@@ -6,79 +6,74 @@
 /*   By: bedantas <bedantas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 16:49:07 by bedantas          #+#    #+#             */
-/*   Updated: 2025/09/30 12:12:39 by bedantas         ###   ########.fr       */
+/*   Updated: 2025/10/02 17:06:58 by bedantas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	free_array(char **array)
+void	exec_access_perror(char *s, char **array, int x)
 {
-	int	i;
-
-	i = 0;
-	while (array[i])
-	{
-		free(array[i]);
-		i++;
-	}
-	free(array);
+	perror(s);
+	free_array(array);
+	exit(x);
 }
 
-char	**path(char **env)
+void	exec_access_putstr(char *s, char **array, int x)
 {
-	char	*search_path;
+	ft_putstr_fd(s, 2);
+	free_array(array);
+	exit(x);
+}
+
+void	cmd_bar(char **cmd_split, char **env)
+{
+	if (access(cmd_split[0], F_OK) != 0)
+		exec_access_putstr("Command not found\n", cmd_split, 127);
+	if (access(cmd_split[0], X_OK) != 0)
+		exec_access_putstr("Permission denied\n", cmd_split, 126);
+	execve(cmd_split[0], cmd_split, env);
+	exec_access_perror("Error execve", cmd_split, 126);
+}
+
+void	cmd_not_bar(char **cmd_split, char **env)
+{
+	char	*exec;
 	char	**path_split;
 
-	search_path = ft_strstr(env, "PATH");
-	path_split = ft_split(search_path, ':');
+	path_split = path(env);
 	if (!path_split)
-		return (NULL);
-	return (path_split);
-}
-
-char	*command_valid(char **cmd_split, char **path_split)
-{
-	int		i;
-	char	*temp_path;
-	char	*exec;
-
-	i = 0;
-	while (path_split[i])
 	{
-		temp_path = ft_strjoin(path_split[i], "/");
-		exec = ft_strjoin(temp_path, cmd_split[0]);
-		if (access(exec, F_OK | X_OK) == 0)
-		{
-			free(temp_path);
-			return (exec);
-		}
-		free(temp_path);
-		free(exec);
-		i++;
+		free_array(cmd_split);
+		exit(EXIT_FAILURE);
 	}
-	return (NULL);
+	exec = command_valid(cmd_split, path_split);
+	if (exec == (char *)-1)
+	{
+		free_array(path_split);
+		exec_access_putstr("Permission denied\n", cmd_split, 126);
+	}
+	else if (!exec)
+	{
+		free_array(path_split);
+		exec_access_putstr("Command not found\n", cmd_split, 127);
+	}
+	execve(exec, cmd_split, env);
+	free_array(path_split);
+	free(exec);
+	exec_access_perror("Error execve", cmd_split, 126);
 }
 
 void	exec_cmd(char *argv, char **env)
 {
 	char	**cmd_split;
-	char	**path_split;
-	char	*exec;
 
 	cmd_split = ft_split(argv, ' ');
 	if (!cmd_split)
-		exit (EXIT_FAILURE);
-		
-	path_split = path(env);
-	if (!path_split)
-		exit (EXIT_FAILURE);
-
-	exec = command_valid(cmd_split, path_split);
-	if (!exec || execve(exec, cmd_split, env) == -1)
-	{
-		free_array(cmd_split);
-		free_array(path_split);
-		perror_exit("Command invalid");
-	}
+		exit(EXIT_FAILURE);
+	
+	if (bar(cmd_split[0]))
+		cmd_bar(cmd_split, env);
+	else
+		cmd_not_bar(cmd_split, env);
 }

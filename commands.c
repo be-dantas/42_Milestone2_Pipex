@@ -6,7 +6,7 @@
 /*   By: bedantas <bedantas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 17:55:47 by bedantas          #+#    #+#             */
-/*   Updated: 2025/09/30 13:57:58 by bedantas         ###   ########.fr       */
+/*   Updated: 2025/10/02 11:24:26 by bedantas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ int	open_file(char *argv, int flag)
 	if (flag == 1)
 		fd = open(argv, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
-		perror_exit("Error open infile");
+	{
+		perror(argv);
+		exit(1);
+	}
 	return (fd);
 }
 
@@ -54,4 +57,26 @@ void	cmd2(char **argv, int *pipe_fd, char **env)
 	close(new_fd);
 	
 	exec_cmd(argv[3], env);
+}
+
+void	pid_cmd1(char **argv, char **env, int *pipe_fd, pid_t pid)
+{
+	if (pid == -1)
+		perror_exit("");
+	if (pid == 0)
+	{
+		cmd1(argv, pipe_fd, env);
+		exit(EXIT_FAILURE);
+	}
+}
+
+void	pid_cmd2(char **argv, char **env, int *pipe_fd, pid_t pid)
+{
+	if (pid == -1)
+		perror_exit("");
+	if (pid == 0)
+	{
+		cmd2(argv, pipe_fd, env);
+		exit(EXIT_FAILURE);
+	}
 }

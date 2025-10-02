@@ -6,55 +6,44 @@
 /*   By: bedantas <bedantas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 17:55:01 by bedantas          #+#    #+#             */
-/*   Updated: 2025/09/30 12:01:23 by bedantas         ###   ########.fr       */
+/*   Updated: 2025/10/02 17:07:06 by bedantas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	perror_exit(char *str)
-{
-	perror(str);
-	exit (EXIT_FAILURE);
-}
-
-int	input_invalid(int argc, char **argv)
-{
-	int	i;
-
-	i = 1;
-	if (argc != 5)
-		return (0);
-	while (argv[i])
-	{
-		if (argv[i][0] == '\0')
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
 int	main(int argc, char **argv, char **env)
 {
-	int		pipe_fd[2]; //na função pipe ele enche esse array de int com a saída leitura e escrita (3 ou 4)
+	int		pipe_fd[2];
 	int		pipe_result;
-	pid_t	pid;
+	pid_t	pid1;
+	pid_t	pid2;
+	int		status;
 
 	if (!input_invalid(argc, argv))
-		perror_exit("./pipex infile cmd1 cmd2 outfile\n");
+		return (1);
+		
 	pipe_result = pipe(pipe_fd);
 	if (pipe_result == -1)
-		perror_exit("Error pipe");
-	pid = fork();
-	if (pid == -1)
-		perror_exit("Error pid");
-	if (pid == 0) //se for o primeiro processo (cmd1/filho)
-		cmd1(argv, pipe_fd, env);
-	else
-	{
-		waitpid(pid, NULL, 0);
-		cmd2(argv, pipe_fd, env);
-		exit(EXIT_SUCCESS);
-	}
-	return (0);
+		perror_exit("");
+
+	pid1 = fork();
+	if (pid1 == -1)
+		perror_exit("");
+	pid_cmd1(argv, env, pipe_fd, pid1);
+
+	pid2 = fork();
+	if (pid2 == -1)
+		perror_exit("");
+	pid_cmd2(argv, env, pipe_fd, pid2);
+
+	close(pipe_fd[0]);
+	close(pipe_fd[1]);
+
+	waitpid(pid1, NULL, 0);        // espera o primeiro (não importa status)
+	waitpid(pid2, &status, 0);     // espera o último (importa status)
+	
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status)); // retorna status do cmd2
+	return (1);
 }
