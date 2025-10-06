@@ -6,7 +6,7 @@
 /*   By: bedantas <bedantas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 17:55:01 by bedantas          #+#    #+#             */
-/*   Updated: 2025/10/01 18:00:46 by bedantas         ###   ########.fr       */
+/*   Updated: 2025/10/06 16:01:33 by bedantas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,20 @@ void	perror_exit(char *str)
 
 int	input_invalid(int argc, char **argv)
 {
-	int	i;
-
-	i = 1;
 	if (argc != 5)
-		return (0);
-	while (argv[i])
+		return (1);
+	if (argv[1][0] == '\0' && argv[2][0] == '\0'
+		&& argv[3][0] == '\0' && argv[4][0] == '\0')
+		return (1);
+	if (argv[2][0] == '\0')
 	{
-		if (argv[i][0] == '\0')
-			return (0);
-		i++;
+		ft_putstr_fd("Permission denied\n", 1);
+		exit(0);
 	}
-	return (1);
+	else if (argv[3][0] == '\0')
+	{
+		ft_putstr_fd("Permission denied\n", 1);
+		exit(126);
+	}
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: bedantas <bedantas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 17:55:01 by bedantas          #+#    #+#             */
-/*   Updated: 2025/10/06 10:45:57 by bedantas         ###   ########.fr       */
+/*   Updated: 2025/10/06 13:32:48 by bedantas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	main(int argc, char **argv, char **env)
 {
 	t_pipex	px;
 
-	if (!input_invalid(argc, argv))
+	if (input_invalid(argc, argv))
 		return (1);
 	if (pipe(px.pipe_fd) == -1)
 		perror_exit("");
