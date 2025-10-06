@@ -6,7 +6,7 @@
 /*   By: bedantas <bedantas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 17:19:44 by bedantas          #+#    #+#             */
-/*   Updated: 2025/10/02 17:08:01 by bedantas         ###   ########.fr       */
+/*   Updated: 2025/10/06 09:09:47 by bedantas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	free_array(char **array)
 
 	i = 0;
 	if (!array)
-		return ;	
+		return ;
 	while (array[i])
 	{
 		free(array[i]);

@@ -6,19 +6,28 @@
 /*   By: bedantas <bedantas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 17:56:12 by bedantas          #+#    #+#             */
-/*   Updated: 2025/10/02 16:44:59 by bedantas         ###   ########.fr       */
+/*   Updated: 2025/10/06 09:11:00 by bedantas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
 
-# include <sys/types.h> //para pid_t
-# include <fcntl.h> //para O_RDONLY...
-# include <sys/wait.h> // para waitpid
-# include <stdio.h>  // Para perror()
-# include <errno.h>  // Para errno
+# include <sys/types.h>
+# include <fcntl.h>
+# include <sys/wait.h>
+# include <stdio.h>
+# include <errno.h>
 # include "./libft/libft.h"
+
+typedef struct s_pipex
+{
+	int		pipe_fd[2];
+	pid_t	pid1;
+	pid_t	pid2;
+	int		status1;
+	int		status2;
+}	t_pipex;
 
 // pipex_utils.c
 void	perror_exit(char *str);

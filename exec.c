@@ -6,7 +6,7 @@
 /*   By: bedantas <bedantas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 16:49:07 by bedantas          #+#    #+#             */
-/*   Updated: 2025/10/02 17:06:58 by bedantas         ###   ########.fr       */
+/*   Updated: 2025/10/06 09:08:34 by bedantas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ void	exec_cmd(char *argv, char **env)
 	cmd_split = ft_split(argv, ' ');
 	if (!cmd_split)
 		exit(EXIT_FAILURE);
-	
 	if (bar(cmd_split[0]))
 		cmd_bar(cmd_split, env);
 	else

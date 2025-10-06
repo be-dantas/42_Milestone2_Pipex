@@ -6,7 +6,7 @@
 /*   By: bedantas <bedantas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 17:55:47 by bedantas          #+#    #+#             */
-/*   Updated: 2025/10/02 11:24:26 by bedantas         ###   ########.fr       */
+/*   Updated: 2025/10/06 09:08:15 by bedantas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,12 @@ void	cmd1(char **argv, int *pipe_fd, char **env)
 {
 	int	new_fd;
 
-	new_fd = open_file(argv[1], 0); //retorna um int do fd novo para depois substituir o fd padrão (0 ou 1) por esse.
-	dup2(new_fd, 0); //funcao dup2(valor_novo, valor_antigo) = o fd leitura agora 'e o fd gerado acima
+	new_fd = open_file(argv[1], 0);
+	dup2(new_fd, 0);
 	close(new_fd);
-	
-	dup2(pipe_fd[1], 1); //o fd de escrita (sa'ida padrao terminal por ex) agora 'e escrito no pipe
+	dup2(pipe_fd[1], 1);
 	close(pipe_fd[1]);
-	close(pipe_fd[0]); //fechar mesmo sem ter usado se nao o programa fica esperando ele ser usado ou da vazamento
-
+	close(pipe_fd[0]);
 	exec_cmd(argv[2], env);
 }
 
@@ -48,14 +46,12 @@ void	cmd2(char **argv, int *pipe_fd, char **env)
 {
 	int	new_fd;
 
-	dup2(pipe_fd[0], 0); //a leitura 'e o que esta em pipe (atualizado pelo preocesso filho)
+	dup2(pipe_fd[0], 0);
 	close(pipe_fd[0]);
 	close(pipe_fd[1]);
-
-	new_fd = open_file(argv[4], 1); //retorna um int do fd novo para depois substituir o fd padrão (0 ou 1) por esse.
-	dup2(new_fd, 1); //escreve no arquivo outfile
+	new_fd = open_file(argv[4], 1);
+	dup2(new_fd, 1);
 	close(new_fd);
-	
 	exec_cmd(argv[3], env);
 }
 
