@@ -6,7 +6,7 @@
 /*   By: bedantas <bedantas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 17:55:01 by bedantas          #+#    #+#             */
-/*   Updated: 2025/10/06 13:32:48 by bedantas         ###   ########.fr       */
+/*   Updated: 2025/10/07 10:50:18 by bedantas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ int	main(int argc, char **argv, char **env)
 	close(px.pipe_fd[1]);
 	waitpid(px.pid1, &px.status1, 0);
 	waitpid(px.pid2, &px.status2, 0);
-	if (WIFEXITED(px.status1) && WEXITSTATUS(px.status1 != 0))
-		return (WEXITSTATUS(px.status1));
 	if (WIFEXITED(px.status2))
 		return (WEXITSTATUS(px.status2));
 	return (1);
